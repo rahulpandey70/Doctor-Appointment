@@ -22,6 +22,27 @@ const Doctors = () => {
 		}
 	};
 
+	//Handle Approve button
+	const handleAccountStaus = async (record, status) => {
+		try {
+			const res = await axios.post(
+				"/api/admin/changedAccountStatus",
+				{ doctorId: record._id, userId: record.userId, status },
+				{
+					headers: {
+						Authorization: "Bearer " + localStorage.getItem("token"),
+					},
+				}
+			);
+			if (res.data.success) {
+				message.success(res.data.message);
+				window.location.reload();
+			}
+		} catch (error) {
+			message.error("Somthing went wrong");
+		}
+	};
+
 	useEffect(() => {
 		getDoctors();
 	}, []);
@@ -51,7 +72,12 @@ const Doctors = () => {
 			render: (text, record) => (
 				<div className="d-flex">
 					{record.status === "pending" ? (
-						<button className="btn btn-success">Approve</button>
+						<button
+							className="btn btn-success"
+							onClick={() => handleAccountStaus(record, "approve")}
+						>
+							Approve
+						</button>
 					) : (
 						<button className="btn btn-danger">Reject</button>
 					)}
