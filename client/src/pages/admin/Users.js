@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import axios from "axios";
-import { message } from "antd";
+import { message, Table } from "antd";
 
 const Users = () => {
 	const [users, setUsers] = useState([]);
@@ -25,9 +25,41 @@ const Users = () => {
 	useEffect(() => {
 		getUsers();
 	}, []);
+
+	// Antd table columns
+	const columns = [
+		{
+			title: "Name",
+			dataIndex: "name",
+		},
+		{
+			title: "Email",
+			dataIndex: "email",
+		},
+		{
+			title: "Doctor",
+			dataIndex: "isDoctor",
+			render: (text, record) => <span>{record.isDoctor ? "Yes" : "No"}</span>,
+		},
+		{
+			title: "Created At",
+			dataIndex: "createdAt",
+		},
+		{
+			title: "Actions",
+			dataIndex: "actions",
+			render: (text, record) => (
+				<div className="d-flex">
+					<button className="btn btn-danger">Delete</button>
+				</div>
+			),
+		},
+	];
+
 	return (
 		<Layout>
-			<h1>Users list</h1>
+			<h1 className="text-center m-2">Users list</h1>
+			<Table columns={columns} dataSource={users} />
 		</Layout>
 	);
 };
