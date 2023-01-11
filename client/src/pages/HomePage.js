@@ -1,20 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { message } from "antd";
+import { message, Row } from "antd";
 import Layout from "../components/Layout";
+import DoctorList from "../components/DoctorList";
 
 const HomePage = () => {
+	const [doctors, setDoctors] = useState([]);
+
 	const getUserData = async () => {
 		try {
-			await axios.post(
-				"/api/user/getUserData",
-				{},
-				{
-					headers: {
-						Authorization: "Bearer " + localStorage.getItem("token"),
-					},
-				}
-			);
+			const res = await axios.get("/api/user/getAllDoctors", {
+				headers: {
+					Authorization: "Bearer " + localStorage.getItem("token"),
+				},
+			});
+			if (res.data.success) {
+				setDoctors(res.data.data);
+			}
 		} catch (error) {
 			message.error(`Something went wrong!`);
 		}
@@ -26,7 +28,10 @@ const HomePage = () => {
 
 	return (
 		<Layout>
-			<h1>HomePage</h1>
+			<h1 className="text-center">Doctor List</h1>
+			<Row>
+				{doctors && doctors.map((doctor) => <DoctorList doctor={doctor} />)}
+			</Row>
 		</Layout>
 	);
 };
