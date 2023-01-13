@@ -74,7 +74,7 @@ const Doctors = () => {
 					{record.status === "pending" ? (
 						<button
 							className="btn btn-success"
-							onClick={() => handleAccountStaus(record, "approve")}
+							onClick={() => handleAccountStaus(record, "approved")}
 						>
 							Approve
 						</button>

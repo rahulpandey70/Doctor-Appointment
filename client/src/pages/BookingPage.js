@@ -59,8 +59,9 @@ const BookingPage = () => {
 					},
 				}
 			);
+			dispatch(hideLoading());
 			if (res.data.success) {
-				setDoctors(res.data.data);
+				message.success(res.data.message);
 			}
 		} catch (error) {
 			dispatch(hideLoading());
