@@ -43,7 +43,7 @@ const Profile = () => {
 	const handleFinish = async (values) => {
 		try {
 			dispatch(showLoading());
-			const res = await axios.post(
+			const res = await axios.patch(
 				"/api/doctor/updateProfile",
 				{
 					...values,

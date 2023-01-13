@@ -1,10 +1,11 @@
-import { Col, Form, Input, message, Row, TimePicker } from "antd";
 import React from "react";
-import Layout from "../components/Layout";
+import axios from "axios";
+import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Col, Form, Input, message, Row, TimePicker } from "antd";
+import Layout from "../components/Layout";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
-import axios from "axios";
 
 const ApplyDoctor = () => {
 	const dispatch = useDispatch();
@@ -17,7 +18,14 @@ const ApplyDoctor = () => {
 			dispatch(showLoading());
 			const res = await axios.post(
 				"/api/user/apply-doctor",
-				{ ...values, userId: user._id },
+				{
+					...values,
+					userId: user._id,
+					timings: [
+						moment(values.timings[0]).format("HH:mm"),
+						moment(values.timings[1]).format("HH:mm"),
+					],
+				},
 				{
 					headers: {
 						Authorization: `Bearer ${localStorage.getItem("token")}`,
