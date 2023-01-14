@@ -39,7 +39,7 @@ const updateProfileController = async (req, res) => {
 
 const getSingleDocInfoController = async (req, res) => {
 	try {
-		const doctor = await doctorModel.findById({ _id: req.body.doctorId });
+		const doctor = await doctorModel.findOne({ _id: req.body.doctorId });
 		res.status(200).send({
 			success: true,
 			message: "Doctor profile fetched successfully",

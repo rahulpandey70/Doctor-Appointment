@@ -69,6 +69,31 @@ const BookingPage = () => {
 		}
 	};
 
+	const handleAvailability = async () => {
+		try {
+			dispatch(showLoading());
+			const res = await axios.post(
+				"/api/user/check-availbility",
+				{ doctorId: params.doctorId, date, time },
+				{
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem("token")}`,
+					},
+				}
+			);
+			dispatch(hideLoading());
+			if (res.data.success) {
+				setIsAvailable(true);
+				message.success(res.data.message);
+			} else {
+				message.error(res.data.message);
+			}
+		} catch (error) {
+			dispatch(hideLoading());
+			console.log(error);
+		}
+	};
+
 	return (
 		<Layout>
 			<h3 className="text-center">BookingPage</h3>
@@ -94,7 +119,10 @@ const BookingPage = () => {
 								className="m-2"
 								onChange={(value) => setTime(moment(value).format("HH:mm"))}
 							/>
-							<button className="btn btn-primary mt-2">
+							<button
+								className="btn btn-primary mt-2"
+								onClick={handleAvailability}
+							>
 								Check Availability
 							</button>
 							<button className="btn btn-dark mt-2" onClick={handleBooking}>
