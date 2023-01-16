@@ -90,7 +90,6 @@ const BookingPage = () => {
 			}
 		} catch (error) {
 			dispatch(hideLoading());
-			console.log(error);
 		}
 	};
 
