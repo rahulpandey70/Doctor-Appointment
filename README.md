@@ -22,7 +22,7 @@
 
 ## Getting Started:
 
-Pull this repo and create one `.env` file and Add NODE_MODE, MONGO_URL and JWT_SECRET to your `.env` file
+Pull this repo and create one `.env` file and Add NODE_MODE, MONGO_URL and JWT_SECRET to your `.env` file. And also change frontend package.json file proxy `node_api to localhost`
 
 ```
   # Install dependencies for server
@@ -42,4 +42,19 @@ Pull this repo and create one `.env` file and Add NODE_MODE, MONGO_URL and JWT_S
   npm start
 
   # Server runs on http://localhost:5000 and client on http://localhost:3000
+```
+
+## Getting Started With docker compose:
+
+Pull this repo and create one `.env` file and Add MONGO_URL, JWT_SECRET and REFRESH_TOKEN_SECRET to your `.env` file. And also change frontend package.json file proxy `localhost to node_api`
+
+```
+    # start container
+    docker compose up
+
+    # start services with detached mode
+    docker compose up -d
+
+    # stop all contaners and remove images, volumes
+    docker compose down
 ```
